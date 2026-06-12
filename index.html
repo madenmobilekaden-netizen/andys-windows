@@ -110,30 +110,36 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 18px; flex-shrink: 0;
     }
-    .nav-logo-text { font-size: 17px; font-weight: 800; color: var(--blue); line-height: 1.2; }
-    .nav-logo-text span { display: block; font-size: 10px; font-weight: 600; color: var(--red); letter-spacing: .08em; text-transform: uppercase; }
+    .nav-logo-text { font-size: 17px; font-weight: 800; color: #fff; line-height: 1.2; transition: color .3s; }
+    .nav-logo-text span { display: block; font-size: 10px; font-weight: 600; color: rgba(255,255,255,.7); letter-spacing: .08em; text-transform: uppercase; transition: color .3s; }
+    #navbar.scrolled .nav-logo-text      { color: var(--blue); }
+    #navbar.scrolled .nav-logo-text span { color: var(--red); }
     .nav-links {
       display: flex; align-items: center; gap: 36px; list-style: none;
     }
     .nav-links a {
-      font-size: 14px; font-weight: 600; color: var(--blue);
+      font-size: 14px; font-weight: 600; color: rgba(255,255,255,.85);
       transition: color .2s; letter-spacing: .01em;
     }
-    .nav-links a:hover { color: var(--red); }
+    .nav-links a:hover { color: #fff; }
+    #navbar.scrolled .nav-links a       { color: var(--blue); }
+    #navbar.scrolled .nav-links a:hover { color: var(--red); }
     .nav-cta { display: flex; align-items: center; gap: 16px; }
     .nav-phone {
-      font-size: 15px; font-weight: 800; color: var(--blue);
-      display: flex; align-items: center; gap: 6px;
+      font-size: 15px; font-weight: 800; color: rgba(255,255,255,.85);
+      display: flex; align-items: center; gap: 6px; transition: color .3s;
     }
+    #navbar.scrolled .nav-phone { color: var(--blue); }
     .nav-phone svg { width: 16px; height: 16px; flex-shrink: 0; }
     .hamburger {
       display: none; flex-direction: column; gap: 5px; cursor: pointer;
       padding: 6px; background: none; border: none;
     }
     .hamburger span {
-      display: block; width: 24px; height: 2px; background: var(--blue);
+      display: block; width: 24px; height: 2px; background: #fff;
       border-radius: 2px; transition: all .25s;
     }
+    #navbar.scrolled .hamburger span { background: var(--blue); }
     .mobile-menu {
       display: none; position: fixed; inset: 72px 0 0 0;
       background: #fff; z-index: 998; padding: 24px;
@@ -483,8 +489,8 @@
       position: relative; max-width: 960px; margin: 0 auto;
     }
     .process-line {
-      position: absolute; top: 36px; left: 12.5%; right: 12.5%; height: 2px;
-      background: var(--gray-lt); z-index: 0;
+      position: absolute; top: 35px; left: 12.5%; right: 12.5%; height: 2px;
+      background: var(--gray-lt); z-index: 0; pointer-events: none;
     }
     .process-line-fill {
       height: 100%; background: linear-gradient(90deg, var(--red), var(--blue));
@@ -571,8 +577,14 @@
     .review-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
     .review-stars { display: flex; gap: 3px; }
     .review-stars span { color: #f59e0b; font-size: 16px; }
-    .review-quote { font-size: 15px; color: var(--text); line-height: 1.75; flex: 1; }
-    .review-quote::before { content: '\201C'; font-size: 48px; color: var(--red); line-height: 0; vertical-align: -.5em; margin-right: 2px; font-family: Georgia, serif; }
+    .review-quote { font-size: 15px; color: var(--text); line-height: 1.75; flex: 1; padding-top: 4px; }
+    .review-quote::before {
+      content: '\201C';
+      display: block;
+      font-size: 52px; color: var(--red); line-height: 1;
+      font-family: Georgia, serif;
+      margin-bottom: 4px; height: 36px;
+    }
     .review-author { display: flex; align-items: center; gap: 14px; }
     .review-avatar {
       width: 44px; height: 44px; border-radius: 50%;
@@ -745,30 +757,80 @@
     /* ════════════════════════════
        RESPONSIVE
     ════════════════════════════ */
+
+    /* ── 1280px: prevent nav logo from overlapping links ── */
+    @media (max-width: 1280px) {
+      .nav-logo-text { font-size: 14px; }
+      .nav-links     { gap: 24px; }
+    }
+
+    /* ── 1024px ── */
     @media (max-width: 1024px) {
       .services-grid { grid-template-columns: repeat(2,1fr); }
       .stats-grid    { grid-template-columns: repeat(2,1fr); }
       .footer-top    { grid-template-columns: 1fr 1fr; }
+      /* hero: tighten gap so card doesn't overflow */
+      .hero-inner    { gap: 40px; }
     }
+
+    /* ── 900px: hide phone number to prevent nav crunch ── */
+    @media (max-width: 900px) {
+      .nav-phone { display: none; }
+      .nav-links { gap: 18px; }
+    }
+
+    /* ── 768px ── */
     @media (max-width: 768px) {
-      .hero-inner   { grid-template-columns: 1fr; gap: 48px; }
-      .hero-visual  { order: -1; }
-      .why-inner    { grid-template-columns: 1fr; }
-      .why-visual   { display: none; }
-      .area-inner   { grid-template-columns: 1fr; }
-      .reviews-grid { grid-template-columns: 1fr; }
-      .process-steps{ grid-template-columns: 1fr 1fr; }
-      .services-grid{ grid-template-columns: 1fr; }
-      .nav-links    { display: none; }
-      .nav-phone    { display: none; }
-      .hamburger    { display: flex; }
+      /* Hero */
+      #hero          { padding: 100px 24px 60px; }
+      .hero-inner    { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual   { order: -1; }
+      .hero-title    { font-size: clamp(2.2rem, 8vw, 3rem); }
+      .hero-sub      { font-size: 1rem; }
+      .hero-btns     { margin-bottom: 32px; }
+      .hero-trust    { gap: 12px; }
+      .hero-trust-sep{ display: none; }
+      /* Nav */
+      .nav-links     { display: none; }
+      .nav-phone     { display: none; }
+      .hamburger     { display: flex; }
+      /* Sections */
+      #services, #why, #process, #stats, #testimonials, #area, #cta { padding: 72px 20px; }
+      /* Why */
+      .why-inner     { grid-template-columns: 1fr; gap: 40px; }
+      .why-visual    { display: none; }
+      /* Area */
+      .area-inner    { grid-template-columns: 1fr; gap: 40px; }
+      .area-map      { height: 260px; }
+      /* Reviews */
+      .reviews-grid  { grid-template-columns: 1fr; }
+      /* Process */
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 40px 16px; }
+      .process-line  { display: none; }
+      /* Services */
+      .services-grid { grid-template-columns: 1fr; }
+      /* Floating cards */
       .why-floating, .why-floating-2 { display: none; }
-      .footer-top   { grid-template-columns: 1fr; gap: 32px; }
-      .trust-bar-inner { gap: 24px; }
+      /* Footer */
+      .footer-top    { grid-template-columns: 1fr; gap: 32px; }
+      /* Trust bar */
+      .trust-bar-inner { gap: 16px; }
+      .trust-item    { font-size: 13px; }
+      /* Stats */
+      .stats-grid    { grid-template-columns: 1fr 1fr; }
     }
+
+    /* ── 480px ── */
     @media (max-width: 480px) {
+      .hero-title    { letter-spacing: -.02em; }
+      .hero-btns     { flex-direction: column; }
+      .hero-btns .btn{ justify-content: center; }
       .process-steps { grid-template-columns: 1fr; }
       .stats-grid    { grid-template-columns: 1fr 1fr; }
+      .services-top  { flex-direction: column; align-items: flex-start; }
+      .cta-btns      { flex-direction: column; align-items: center; }
+      .cta-contact   { flex-direction: column; align-items: center; gap: 14px; }
+      .hero-mini-stats .hero-mini-stat-num { font-size: 18px; }
     }
   </style>
 </head>
@@ -1162,7 +1224,7 @@
   <div class="container">
     <div class="area-inner">
       <!-- Map -->
-      <div class="area-map fade-left">
+      <div class="area-map area-fade-left">
         <div class="map-bg"></div>
         <div class="map-lake">
           <div class="map-lake-label">Lake of the Ozarks</div>
@@ -1172,7 +1234,7 @@
       </div>
 
       <!-- Content -->
-      <div class="fade-right">
+      <div class="area-fade-right">
         <div class="section-tag">Service Area</div>
         <h2 class="section-heading">We Come <span>To You</span></h2>
         <p class="section-sub">Proudly serving all communities around Lake of the Ozarks and the surrounding area. If you're near the lake, we've got you covered.</p>
@@ -1414,14 +1476,14 @@ gsap.fromTo('.service-card',
 );
 
 /* Why section */
-gsap.fromTo('.fade-left',
+gsap.fromTo('#why .fade-left',
   { opacity: 0, x: -40 },
   {
     scrollTrigger: { trigger: '#why', start: 'top 78%', toggleActions: 'play none none reverse' },
     opacity: 1, x: 0, duration: .85, ease: 'power3.out'
   }
 );
-gsap.fromTo('.fade-right',
+gsap.fromTo('#why .fade-right',
   { opacity: 0, x: 40 },
   {
     scrollTrigger: { trigger: '#why', start: 'top 78%', toggleActions: 'play none none reverse' },
@@ -1514,20 +1576,16 @@ gsap.fromTo('.review-card',
 );
 
 /* Area section */
-gsap.fromTo('#area .fade-left',
-  { opacity: 0, x: -36 },
-  {
-    scrollTrigger: { trigger: '#area', start: 'top 78%', toggleActions: 'play none none reverse' },
-    opacity: 1, x: 0, duration: .85, ease: 'power3.out'
-  }
-);
-gsap.fromTo('#area .fade-right',
-  { opacity: 0, x: 36 },
-  {
-    scrollTrigger: { trigger: '#area', start: 'top 78%', toggleActions: 'play none none reverse' },
-    opacity: 1, x: 0, duration: .85, ease: 'power3.out', delay: .15
-  }
-);
+gsap.set('.area-fade-left',  { opacity: 0, x: -36 });
+gsap.set('.area-fade-right', { opacity: 0, x:  36 });
+gsap.to('.area-fade-left', {
+  scrollTrigger: { trigger: '#area', start: 'top 78%', toggleActions: 'play none none reverse' },
+  opacity: 1, x: 0, duration: .85, ease: 'power3.out'
+});
+gsap.to('.area-fade-right', {
+  scrollTrigger: { trigger: '#area', start: 'top 78%', toggleActions: 'play none none reverse' },
+  opacity: 1, x: 0, duration: .85, ease: 'power3.out', delay: .15
+});
 gsap.fromTo('.area-tag',
   { opacity: 0, scale: .85 },
   {
