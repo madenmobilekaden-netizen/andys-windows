@@ -610,48 +610,25 @@
       height: 380px; position: relative; border: 1.5px solid var(--gray-lt);
       display: flex; align-items: center; justify-content: center;
     }
-    /* Stylized map placeholder */
+    /* Lake of the Ozarks SVG map */
     .map-bg {
       position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 60%, rgba(0,40,104,.07) 0%, transparent 70%),
-        linear-gradient(160deg, #e8f0fe 0%, #dde8f8 100%);
+      background: linear-gradient(160deg, #eef2fb 0%, #e4ecf9 100%);
     }
-    .map-lake {
-      position: absolute;
-      width: 70%; height: 55%;
-      top: 22%; left: 15%;
-      background: linear-gradient(160deg, #93c5fd, #60a5fa, #3b82f6);
-      border-radius: 60% 40% 50% 55% / 55% 50% 45% 40%;
-      opacity: .7;
-      box-shadow: 0 4px 24px rgba(59,130,246,.3);
+    .map-svg-wrap {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
     }
-    .map-lake-label {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      font-size: 13px; font-weight: 800; color: #fff;
-      text-shadow: 0 1px 4px rgba(0,0,0,.3);
-      white-space: nowrap; letter-spacing: .03em;
+    .map-svg-wrap svg { width: 100%; height: 100%; }
+    /* Pulsing pin ring */
+    @keyframes ping {
+      0%   { transform: scale(1);   opacity: .7; }
+      100% { transform: scale(2.4); opacity: 0;  }
     }
-    .map-pin {
-      position: absolute; width: 32px; height: 32px;
-      background: var(--red); border-radius: 50% 50% 50% 0;
-      transform: rotate(-45deg);
-      box-shadow: 0 4px 12px rgba(200,16,46,.4);
-      top: 35%; left: 48%;
-    }
-    .map-pin::after {
-      content: ''; position: absolute; width: 12px; height: 12px;
-      background: #fff; border-radius: 50%;
-      top: 50%; left: 50%; transform: translate(-50%,-50%);
-    }
-    .map-radius {
-      position: absolute; top: 35%; left: 48%;
-      width: 120px; height: 120px;
-      background: rgba(200,16,46,.08);
-      border: 2px dashed rgba(200,16,46,.3);
-      border-radius: 50%;
-      transform: translate(-44px, -44px);
+    .map-pin-ring {
+      animation: ping 2s ease-out infinite;
+      transform-origin: center;
     }
     .area-content .section-sub { margin: 16px 0 32px; }
     .area-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; }
@@ -1226,11 +1203,106 @@
       <!-- Map -->
       <div class="area-map area-fade-left">
         <div class="map-bg"></div>
-        <div class="map-lake">
-          <div class="map-lake-label">Lake of the Ozarks</div>
+        <div class="map-svg-wrap">
+          <svg viewBox="0 0 420 290" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
+            <defs>
+              <linearGradient id="lakeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%"   stop-color="#93c5fd"/>
+                <stop offset="100%" stop-color="#3b82f6"/>
+              </linearGradient>
+              <filter id="lakeShadow" x="-10%" y="-10%" width="120%" height="130%">
+                <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(59,130,246,0.35)"/>
+              </filter>
+            </defs>
+
+            <!-- ── Lake of the Ozarks outline (simplified but accurate branching shape) ── -->
+            <!-- Main channel + Gravois arm + Niangua arm -->
+            <path filter="url(#lakeShadow)"
+              fill="url(#lakeGrad)" fill-opacity="0.82"
+              stroke="#2563eb" stroke-width="1.2" stroke-opacity="0.5"
+              d="
+                M 390,178
+                C 372,175 355,173 338,172
+                C 320,171 302,170 284,170
+                C 268,170 255,169 244,168
+
+                C 242,160 240,148 238,136
+                C 236,122 234,108 233,96
+                C 232,84  231,72  231,62
+                C 230,52  230,43  231,36
+                C 232,29  234,24  236,21
+                C 239,24  241,30  242,38
+                C 243,47  243,58  244,70
+                C 245,82  246,95  247,108
+                C 248,120 249,132 250,142
+                C 251,152 251,160 252,167
+
+                C 238,167 222,166 206,166
+                C 190,166 174,166 160,166
+
+                C 158,158 156,146 154,134
+                C 152,120 150,106 149,94
+                C 148,82  147,70  147,60
+                C 147,50  147,41  148,34
+                C 149,27  151,22  153,19
+                C 156,22  158,28  159,36
+                C 160,45  160,56  161,68
+                C 162,80  163,93  164,106
+                C 165,118 166,130 167,141
+                C 168,151 168,160 169,166
+
+                C 155,166 140,165 125,164
+                C 110,163 95,162  80,161
+                C 65,160  50,159  36,158
+                C 26,157  18,156  12,156
+                C 10,154  10,150  14,148
+                C 24,146  40,145  58,146
+                C 76,147  94,148  110,149
+                C 124,150 136,151 146,152
+
+                C 170,155 192,156 210,156
+                C 228,156 245,156 260,155
+
+                C 278,154 298,153 316,155
+                C 334,157 352,162 370,168
+                C 380,172 386,176 390,178
+                Z
+              "
+            />
+
+            <!-- Bagnell Dam marker line -->
+            <line x1="390" y1="170" x2="390" y2="185" stroke="#1e3a8a" stroke-width="3" stroke-linecap="round"/>
+            <text x="393" y="183" font-size="8" font-weight="700" fill="#1e3a8a" font-family="Inter,sans-serif">Dam</text>
+
+            <!-- Lake label -->
+            <text x="210" y="200" text-anchor="middle" font-size="11" font-weight="800"
+              fill="#1e40af" font-family="Inter,sans-serif" letter-spacing="0.04em">
+              Lake of the Ozarks
+            </text>
+            <text x="210" y="212" text-anchor="middle" font-size="8.5" font-weight="500"
+              fill="#3b82f6" font-family="Inter,sans-serif">1,150 miles of shoreline</text>
+
+            <!-- Location pin with pulse -->
+            <circle class="map-pin-ring" cx="244" cy="168" r="10" fill="none" stroke="#C8102E" stroke-width="2"/>
+            <circle cx="244" cy="168" r="7" fill="#C8102E"/>
+            <circle cx="244" cy="168" r="3" fill="#fff"/>
+
+            <!-- Compass rose (small) -->
+            <g transform="translate(28,28)">
+              <circle cx="0" cy="0" r="13" fill="white" fill-opacity="0.8" stroke="#cbd5e1" stroke-width="1"/>
+              <text x="0" y="-5" text-anchor="middle" font-size="7" font-weight="800" fill="#1e3a8a" font-family="Inter,sans-serif">N</text>
+              <polygon points="0,-3 1.5,3 0,2 -1.5,3" fill="#1e3a8a"/>
+            </g>
+
+            <!-- Scale bar -->
+            <g transform="translate(18,260)">
+              <line x1="0" y1="0" x2="60" y2="0" stroke="#94a3b8" stroke-width="1.5"/>
+              <line x1="0" y1="-3" x2="0" y2="3" stroke="#94a3b8" stroke-width="1.5"/>
+              <line x1="60" y1="-3" x2="60" y2="3" stroke="#94a3b8" stroke-width="1.5"/>
+              <text x="30" y="-5" text-anchor="middle" font-size="7" fill="#64748b" font-family="Inter,sans-serif">~25 mi</text>
+            </g>
+          </svg>
         </div>
-        <div class="map-radius"></div>
-        <div class="map-pin"></div>
       </div>
 
       <!-- Content -->
