@@ -258,80 +258,22 @@
     .hero-card-dots span:nth-child(3) { background: #28c840; }
     .hero-card-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.7); }
     .hero-card-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-    /* Before/After window visual */
-    .ba-container {
+    /* Real job photo */
+    .hero-photo-wrap {
       position: relative; border-radius: 10px; overflow: hidden;
-      height: 240px; background: #0a1628; cursor: col-resize;
-      user-select: none;
+      height: 240px;
     }
-    .ba-after {
-      position: absolute; inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1527515637462-cff94edd56f9?w=900&auto=format&fit=crop&q=80');
-      background-size: cover; background-position: center top;
-      display: flex; align-items: flex-end; padding: 12px;
+    .hero-photo-wrap img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+      display: block;
     }
-    .ba-after::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg,
-        rgba(255,255,255,.08) 0%, transparent 50%);
-      pointer-events: none;
+    .hero-photo-badge {
+      position: absolute; bottom: 10px; right: 10px;
+      background: var(--blue); color: #fff;
+      font-size: 11px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; padding: 5px 12px; border-radius: 6px;
+      z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,.25);
     }
-    .ba-before {
-      position: absolute; inset: 0; overflow: hidden;
-      width: 50%;
-    }
-    .ba-before-inner {
-      width: 200%; height: 100%;
-      background-image: url('https://images.unsplash.com/photo-1527515637462-cff94edd56f9?w=900&auto=format&fit=crop&q=80');
-      background-size: cover; background-position: center top;
-      position: relative;
-    }
-    /* Dirty/grimy overlay on before side */
-    .ba-before-inner::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        rgba(60,55,45,.55);
-      backdrop-filter: blur(1.5px) saturate(0.4) brightness(0.65);
-    }
-    /* Streak/smear texture */
-    .ba-before-inner::after {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          108deg,
-          transparent 0px, transparent 18px,
-          rgba(180,170,140,.07) 18px, rgba(180,170,140,.07) 22px
-        ),
-        repeating-linear-gradient(
-          72deg,
-          transparent 0px, transparent 30px,
-          rgba(255,255,255,.04) 30px, rgba(255,255,255,.04) 33px
-        );
-    }
-    .ba-divider {
-      position: absolute; top: 0; bottom: 0; width: 3px;
-      background: #fff; left: 50%; transform: translateX(-50%);
-      z-index: 3; box-shadow: 0 0 10px rgba(0,0,0,.3);
-    }
-    .ba-handle {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      width: 38px; height: 38px; border-radius: 50%;
-      background: #fff; box-shadow: 0 4px 16px rgba(0,0,0,.25);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 4; cursor: col-resize;
-    }
-    .ba-handle svg { width: 16px; height: 16px; color: var(--blue); }
-    .ba-label {
-      position: absolute; bottom: 10px; font-size: 11px; font-weight: 700;
-      letter-spacing: .06em; text-transform: uppercase; z-index: 10;
-      padding: 4px 10px; border-radius: 4px; pointer-events: none;
-    }
-    .ba-label-before { left: 10px; background: rgba(0,0,0,.65); color: #fff; }
-    .ba-label-after  { right: 10px; background: var(--blue); color: #fff; }
     /* Mini stats under card */
     .hero-mini-stats {
       display: grid; grid-template-columns: repeat(3,1fr);
@@ -781,7 +723,7 @@
       .hero-trust-sep     { display: none; }
       /* Hero card: let it breathe on tablet */
       .hero-card-body     { padding: 16px; gap: 12px; }
-      .ba-container       { height: 200px; }
+      .hero-photo-wrap    { height: 200px; }
       .hero-mini-stat-num { font-size: 18px; }
       .hero-mini-stat-label { font-size: 9px; }
 
@@ -849,7 +791,7 @@
       .hero-btns .btn     { justify-content: center; width: 100%; }
       .hero-trust         { gap: 8px; }
       .hero-trust-item    { font-size: 12px; }
-      .ba-container       { height: 180px; }
+      .hero-photo-wrap    { height: 180px; }
 
       /* Trust bar: single column */
       .trust-bar-inner    { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -983,25 +925,17 @@
           <div class="hero-card-dots">
             <span></span><span></span><span></span>
           </div>
-          <div class="hero-card-title">Before &amp; After — Lake View Home</div>
+          <div class="hero-card-title">Andy's Window Cleaning — Lake of the Ozarks</div>
         </div>
         <div class="hero-card-body">
-          <!-- Before/After Slider -->
-          <div class="ba-container" id="ba-slider">
-            <div class="ba-after">
-              <div class="ba-label ba-label-after">After ✨</div>
-            </div>
-            <div class="ba-before" id="ba-before">
-              <div class="ba-before-inner">
-                <div class="ba-label ba-label-before">Before</div>
-              </div>
-            </div>
-            <div class="ba-divider" id="ba-divider"></div>
-            <div class="ba-handle" id="ba-handle">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/>
-              </svg>
-            </div>
+          <!-- Real job photo -->
+          <div class="hero-photo-wrap">
+            <img
+              src="https://i.ibb.co/hFZ4khfx/image-1781297062686.webp"
+              alt="Andy's Window Cleaning — professional window cleaning at Lake of the Ozarks"
+              loading="eager"
+            />
+            <div class="hero-photo-badge">✨ Professional Results</div>
           </div>
           <!-- Mini stats -->
           <div class="hero-mini-stats">
@@ -1415,45 +1349,6 @@ hamburger.addEventListener('click', () => {
 });
 function closeMobile() { mobileMenu.classList.remove('open'); }
 
-/* ══════════════════════════════════
-   BEFORE/AFTER SLIDER
-══════════════════════════════════ */
-(function() {
-  const slider  = document.getElementById('ba-slider');
-  const before  = document.getElementById('ba-before');
-  const divider = document.getElementById('ba-divider');
-  const handle  = document.getElementById('ba-handle');
-  let dragging = false;
-
-  function setPos(x) {
-    const rect = slider.getBoundingClientRect();
-    let pct = Math.min(Math.max((x - rect.left) / rect.width, 0.05), 0.95);
-    before.style.width  = (pct * 100) + '%';
-    divider.style.left  = (pct * 100) + '%';
-    handle.style.left   = (pct * 100) + '%';
-  }
-
-  handle.addEventListener('mousedown',  e => { dragging = true; e.preventDefault(); });
-  handle.addEventListener('touchstart', e => { dragging = true; }, { passive: true });
-  window.addEventListener('mouseup',    () => dragging = false);
-  window.addEventListener('touchend',   () => dragging = false);
-  window.addEventListener('mousemove',  e => { if (dragging) setPos(e.clientX); });
-  window.addEventListener('touchmove',  e => { if (dragging && e.touches[0]) setPos(e.touches[0].clientX); }, { passive: true });
-
-  /* Auto-animate on load */
-  let autoDir = -1, autoPos = 0.5;
-  function autoAnimate() {
-    if (!dragging) {
-      autoPos += autoDir * 0.003;
-      if (autoPos <= 0.15) { autoDir = 1; }
-      if (autoPos >= 0.85) { autoDir = -1; }
-      const rect = slider.getBoundingClientRect();
-      setPos(rect.left + autoPos * rect.width);
-    }
-    requestAnimationFrame(autoAnimate);
-  }
-  autoAnimate();
-})();
 
 /* ══════════════════════════════════
    HERO MINI COUNTERS (on load)
