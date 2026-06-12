@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Andy's Window Cleaning | Lake of the Ozarks #1 Window Cleaning</title>
   <meta name="description" content="The Lake of the Ozarks' largest and most trusted window cleaning company. Residential & commercial. Streak-free guaranteed." />
 
@@ -35,6 +35,8 @@
       background: var(--white);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      /* Prevent rubber-band horizontal scroll on iOS */
+      overscroll-behavior-x: none;
     }
     img { display: block; max-width: 100%; }
     a  { text-decoration: none; color: inherit; }
@@ -142,16 +144,19 @@
     #navbar.scrolled .hamburger span { background: var(--blue); }
     .mobile-menu {
       display: none; position: fixed; inset: 72px 0 0 0;
-      background: #fff; z-index: 998; padding: 24px;
-      flex-direction: column; gap: 8px;
+      background: #fff; z-index: 998; padding: 20px 24px 32px;
+      flex-direction: column; gap: 0;
       border-top: 1px solid var(--gray-lt);
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
     }
     .mobile-menu.open { display: flex; }
     .mobile-menu a {
-      font-size: 18px; font-weight: 700; color: var(--blue);
-      padding: 14px 0; border-bottom: 1px solid var(--gray-lt);
+      font-size: 17px; font-weight: 700; color: var(--blue);
+      padding: 16px 0; border-bottom: 1px solid var(--gray-lt);
+      min-height: 52px; display: flex; align-items: center;
     }
-    .mobile-menu .btn { margin-top: 16px; justify-content: center; }
+    .mobile-menu a:last-of-type { border-bottom: none; }
+    .mobile-menu .btn { margin-top: 20px; justify-content: center; width: 100%; }
 
     /* ════════════════════════════
        HERO
@@ -734,7 +739,7 @@
        RESPONSIVE
     ════════════════════════════ */
 
-    /* ── 1280px: prevent nav logo from overlapping links ── */
+    /* ── 1280px ── */
     @media (max-width: 1280px) {
       .nav-logo-text { font-size: 14px; }
       .nav-links     { gap: 24px; }
@@ -745,68 +750,144 @@
       .services-grid { grid-template-columns: repeat(2,1fr); }
       .stats-grid    { grid-template-columns: repeat(2,1fr); }
       .footer-top    { grid-template-columns: 1fr 1fr; }
-      /* hero: tighten gap so card doesn't overflow */
       .hero-inner    { gap: 40px; }
+      .why-inner     { gap: 48px; }
     }
 
-    /* ── 900px: hide phone number to prevent nav crunch ── */
+    /* ── 900px ── */
     @media (max-width: 900px) {
-      .nav-phone { display: none; }
-      .nav-links { gap: 18px; }
+      .nav-phone     { display: none; }
+      .nav-links     { gap: 18px; }
     }
 
     /* ── 768px ── */
     @media (max-width: 768px) {
-      /* Hero */
-      #hero          { padding: 100px 24px 60px; }
-      .hero-inner    { grid-template-columns: 1fr; gap: 40px; }
-      .hero-visual   { order: -1; }
-      .hero-title    { font-size: clamp(2.2rem, 8vw, 3rem); }
-      .hero-sub      { font-size: 1rem; }
-      .hero-btns     { margin-bottom: 32px; }
-      .hero-trust    { gap: 12px; }
-      .hero-trust-sep{ display: none; }
       /* Nav */
-      .nav-links     { display: none; }
-      .nav-phone     { display: none; }
-      .hamburger     { display: flex; }
+      .nav-links          { display: none; }
+      .nav-phone          { display: none; }
+      .hamburger          { display: flex; }
+      .nav-logo-text      { font-size: 13px; }
+      /* "Free Quote" btn stays in nav on mobile — make it smaller */
+      .nav-cta .btn       { padding: 10px 16px; font-size: 13px; }
+
+      /* Hero */
+      #hero               { padding: 90px 20px 56px; }
+      .hero-inner         { grid-template-columns: 1fr; gap: 36px; }
+      .hero-visual        { order: -1; }
+      .hero-title         { font-size: clamp(2rem, 9vw, 2.8rem); }
+      .hero-sub           { font-size: 0.95rem; margin-bottom: 28px; }
+      .hero-btns          { gap: 12px; margin-bottom: 28px; }
+      .hero-trust         { gap: 10px; flex-wrap: wrap; }
+      .hero-trust-sep     { display: none; }
+      /* Hero card: let it breathe on tablet */
+      .hero-card-body     { padding: 16px; gap: 12px; }
+      .ba-container       { height: 200px; }
+      .hero-mini-stat-num { font-size: 18px; }
+      .hero-mini-stat-label { font-size: 9px; }
+
+      /* Trust bar: 2-column wrap */
+      .trust-bar-inner    { gap: 14px 28px; justify-content: flex-start; }
+      .trust-item         { font-size: 13px; }
+
       /* Sections */
-      #services, #why, #process, #stats, #testimonials, #area, #cta { padding: 72px 20px; }
-      /* Why */
-      .why-inner     { grid-template-columns: 1fr; gap: 40px; }
-      .why-visual    { display: none; }
-      /* Area */
-      .area-inner    { grid-template-columns: 1fr; gap: 40px; }
-      .area-map      { height: 260px; }
-      /* Reviews */
-      .reviews-grid  { grid-template-columns: 1fr; }
-      /* Process */
-      .process-steps { grid-template-columns: 1fr 1fr; gap: 40px 16px; }
-      .process-line  { display: none; }
+      #services, #why, #process, #stats,
+      #testimonials, #area, #cta    { padding: 64px 20px; }
+      #trust-bar                    { padding: 16px 20px; }
+
       /* Services */
-      .services-grid { grid-template-columns: 1fr; }
-      /* Floating cards */
+      .services-grid      { grid-template-columns: 1fr; }
+      .services-top       { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .service-card       { padding: 28px 24px; }
+
+      /* Why */
+      .why-inner          { grid-template-columns: 1fr; gap: 36px; }
+      .why-visual         { display: none; }
       .why-floating, .why-floating-2 { display: none; }
-      /* Footer */
-      .footer-top    { grid-template-columns: 1fr; gap: 32px; }
-      /* Trust bar */
-      .trust-bar-inner { gap: 16px; }
-      .trust-item    { font-size: 13px; }
+      .why-list           { gap: 20px; }
+
+      /* Process */
+      .process-steps      { grid-template-columns: 1fr 1fr; gap: 36px 16px; }
+      .process-line       { display: none; }
+      .proc-step          { padding: 0 8px; }
+      .proc-num           { width: 56px; height: 56px; font-size: 18px; margin-bottom: 16px; }
+
       /* Stats */
-      .stats-grid    { grid-template-columns: 1fr 1fr; }
+      .stats-grid         { grid-template-columns: 1fr 1fr; }
+      .stat-box           { padding: 32px 16px; }
+
+      /* Reviews */
+      .reviews-grid       { grid-template-columns: 1fr; }
+      .review-card        { padding: 24px 20px; }
+
+      /* Area */
+      .area-inner         { grid-template-columns: 1fr; gap: 36px; }
+      .area-map           { height: 280px; }
+      .map-overlay-pin    { font-size: 11px; padding: 8px 12px; }
+
+      /* CTA */
+      .cta-btns           { flex-direction: column; align-items: center; gap: 12px; }
+      .cta-contact        { flex-direction: column; align-items: center; gap: 12px; }
+
+      /* Footer */
+      .footer-top         { grid-template-columns: 1fr; gap: 28px; padding-bottom: 32px; }
+      footer              { padding: 48px 20px 24px; }
+
+      /* Scroll to top */
+      #scroll-top         { bottom: 16px; right: 16px; width: 40px; height: 40px; }
     }
 
-    /* ── 480px ── */
+    /* ── 480px (phones) ── */
     @media (max-width: 480px) {
-      .hero-title    { letter-spacing: -.02em; }
-      .hero-btns     { flex-direction: column; }
-      .hero-btns .btn{ justify-content: center; }
-      .process-steps { grid-template-columns: 1fr; }
-      .stats-grid    { grid-template-columns: 1fr 1fr; }
-      .services-top  { flex-direction: column; align-items: flex-start; }
-      .cta-btns      { flex-direction: column; align-items: center; }
-      .cta-contact   { flex-direction: column; align-items: center; gap: 14px; }
-      .hero-mini-stats .hero-mini-stat-num { font-size: 18px; }
+      /* Nav logo: shorten text on tiny screens */
+      .nav-logo-text      { font-size: 12px; }
+      .nav-logo-icon      { width: 32px; height: 32px; font-size: 15px; }
+
+      /* Hero */
+      #hero               { padding: 80px 16px 48px; }
+      .hero-title         { font-size: clamp(1.85rem, 10vw, 2.4rem); letter-spacing: -.02em; }
+      .hero-btns          { flex-direction: column; }
+      .hero-btns .btn     { justify-content: center; width: 100%; }
+      .hero-trust         { gap: 8px; }
+      .hero-trust-item    { font-size: 12px; }
+      .ba-container       { height: 180px; }
+
+      /* Trust bar: single column */
+      .trust-bar-inner    { flex-direction: column; align-items: flex-start; gap: 10px; }
+
+      /* Services */
+      .services-grid      { grid-template-columns: 1fr; }
+      .service-card       { padding: 24px 20px; }
+
+      /* Process: single column */
+      .process-steps      { grid-template-columns: 1fr; gap: 24px; }
+      .proc-step          { flex-direction: row; text-align: left; gap: 16px; align-items: flex-start; }
+      .proc-num           { margin-bottom: 0; flex-shrink: 0; }
+
+      /* Stats: 2 col stays but smaller padding */
+      .stat-box           { padding: 24px 12px; }
+      .stat-num-big       { font-size: 2.2rem; }
+
+      /* Section headings */
+      .section-heading    { font-size: clamp(1.7rem, 8vw, 2.4rem); }
+
+      /* Buttons — full width in CTA */
+      .btn-primary, .btn-white { width: 100%; justify-content: center; }
+      .cta-btns .btn      { width: 100%; max-width: 320px; }
+
+      /* Footer */
+      .footer-bottom      { flex-direction: column; gap: 6px; text-align: center; }
+      footer              { padding: 40px 16px 20px; }
+
+      /* Area map taller on phones so lake is visible */
+      .area-map           { height: 240px; }
+    }
+
+    /* ── 360px (small Android phones) ── */
+    @media (max-width: 360px) {
+      .hero-title         { font-size: 1.7rem; }
+      .nav-logo-text      { display: none; }  /* just show icon on very small screens */
+      .hero-mini-stats    { grid-template-columns: 1fr 1fr 1fr; }
+      .hero-mini-stat-num { font-size: 15px; }
     }
   </style>
 </head>
