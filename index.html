@@ -446,23 +446,23 @@
     .why-card-main h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; position: relative; z-index: 1; }
     .why-card-main p  { font-size: 15px; color: rgba(255,255,255,.7); line-height: 1.7; position: relative; z-index: 1; }
     .why-floating {
-      position: absolute; right: -24px; top: 40px;
+      position: absolute; right: -20px; bottom: -24px;
       background: #fff; border-radius: 14px;
-      padding: 20px 24px; box-shadow: var(--shadow-lg);
-      display: flex; align-items: center; gap: 14px;
-      width: 220px;
+      padding: 16px 20px; box-shadow: var(--shadow-lg);
+      display: flex; align-items: center; gap: 12px;
+      width: 200px; z-index: 2;
     }
-    .why-floating-icon { font-size: 32px; }
+    .why-floating-icon { font-size: 28px; flex-shrink: 0; }
     .why-floating-text { font-size: 13px; font-weight: 700; color: var(--blue); line-height: 1.4; }
-    .why-floating-text span { display: block; font-weight: 500; color: var(--gray); font-size: 12px; }
+    .why-floating-text span { display: block; font-weight: 500; color: var(--gray); font-size: 11px; }
     .why-floating-2 {
-      position: absolute; left: -24px; bottom: 40px;
+      position: absolute; left: -20px; top: -20px;
       background: var(--red); border-radius: 14px;
-      padding: 16px 20px; box-shadow: 0 8px 30px rgba(200,16,46,.3);
-      color: #fff; width: 180px;
+      padding: 14px 18px; box-shadow: 0 8px 30px rgba(200,16,46,.3);
+      color: #fff; width: 160px; z-index: 2;
     }
-    .why-floating-2 .num { font-size: 28px; font-weight: 900; }
-    .why-floating-2 .lbl { font-size: 12px; font-weight: 600; opacity: .8; }
+    .why-floating-2 .num { font-size: 26px; font-weight: 900; }
+    .why-floating-2 .lbl { font-size: 11px; font-weight: 600; opacity: .85; }
 
     .why-list { display: flex; flex-direction: column; gap: 28px; }
     .why-item { display: flex; gap: 20px; align-items: flex-start; }
@@ -890,7 +890,7 @@
       <div class="hero-trust">
         <div class="hero-trust-item"><span class="hero-trust-icon">✅</span> Fully Insured</div>
         <div class="hero-trust-sep"></div>
-        <div class="hero-trust-item"><span class="hero-trust-icon">⭐</span> 500+ 5-Star Reviews</div>
+        <div class="hero-trust-item"><span class="hero-trust-icon">⭐</span> 150+ 5-Star Reviews</div>
         <div class="hero-trust-sep"></div>
         <div class="hero-trust-item"><span class="hero-trust-icon">🏆</span> Since 2008</div>
       </div>
@@ -1027,12 +1027,12 @@
           <div class="why-floating-icon">⭐</div>
           <div class="why-floating-text">
             4.9 / 5.0 Rating
-            <span>Based on 500+ reviews</span>
+            <span>Based on 150+ reviews</span>
           </div>
         </div>
         <div class="why-floating-2">
-          <div class="num">100%</div>
-          <div class="lbl">Satisfaction Guaranteed</div>
+          <div class="num">3,500+</div>
+          <div class="lbl">Jobs Completed</div>
         </div>
       </div>
 
@@ -1127,7 +1127,7 @@
     <h2 class="section-heading" style="color:#fff;margin-bottom:64px;text-align:center;">Results That <span style="color:#ef8080;">Speak for Themselves</span></h2>
     <div class="stats-grid">
       <div class="stat-box">
-        <div class="stat-num-big"><span class="counter" data-target="8500" data-suffix="+">0</span></div>
+        <div class="stat-num-big"><span class="counter" data-target="3500" data-suffix="+">0</span></div>
         <div class="stat-box-label">Jobs Completed</div>
       </div>
       <div class="stat-box">
@@ -1135,7 +1135,7 @@
         <div class="stat-box-label">Years in Business</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num-big"><span class="counter" data-target="500" data-suffix="+">0</span></div>
+        <div class="stat-num-big"><span class="counter" data-target="150" data-suffix="+">0</span></div>
         <div class="stat-box-label">5-Star Reviews</div>
       </div>
       <div class="stat-box">
@@ -1478,8 +1478,8 @@ function animateCount(el, target, suffix, duration) {
 }
 window.addEventListener('load', () => {
   setTimeout(() => {
-    animateCount(document.getElementById('hs1'), 8500, '+', 1800);
-    animateCount(document.getElementById('hs2'), 500,  '+', 1400);
+    animateCount(document.getElementById('hs1'), 3500, '+', 1800);
+    animateCount(document.getElementById('hs2'), 150,  '+', 1200);
     animateCount(document.getElementById('hs3'), 100,  '%', 1000);
   }, 600);
 });
